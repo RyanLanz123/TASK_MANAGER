@@ -1,0 +1,19 @@
+Data Structure
+
+Task Attributes:
+1. Task Name: Short desc
+2. Deadline: Due date for tasks
+3. Category: Label of tasks ie work/personal
+4. Status: Tasks completion status
+
+Formats:
+Tasks stored in text file (.txt)
+
+Roadmap:
+1. Create password txt file, plain text to begin with.
+2. Create login system, basic login system that can read the password
+3. Add task management (add tasks/view tasks)
+4. Add task functionality to label/mark them aswell as delete
+5. Add deadline reminders
+6. Combine all features into menu 
+7. Test features and polish
