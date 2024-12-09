@@ -12,7 +12,7 @@ def login():#Allow user to login with password
         else:
             print("Incorrect password. Try again")
 
-def add_task():
+def add_task():#Add a task to the .txt file
     task_name = input("Enter task name: ")
     deadline = input("Enter deadline (YYYY-MM-DD): ")
     category = input("Enter category: ")
@@ -21,5 +21,18 @@ def add_task():
         f.write(f"{task_name}|{deadline}|{category}|{status}\n")
     print("Tasks added succesfully!")
 
+def view_tasks():#View tasks in .txt file
+    try:
+        with open('tasks.txt', 'r') as f:
+            tasks = f.readlines()
+            if not tasks:
+                print("No tasks found!")
+            else:
+                for idx, task in enumerate(tasks, 1):
+                    task_name, deadline, category, status = task.strip().split('|')
+                    print(f"{idx}. {task_name} | Deadline: {deadline} | Category: {category} | Status: {status}")
+    except FileNotFoundError:
+            print("No tasks file found! Add a task first.")
+
 if __name__ == "__main__":
-    add_task()
+    view_tasks()
