@@ -1,3 +1,5 @@
+from datetime import datetime
+
 def load_password():#Load password from .txt file
     with open('password.txt', 'r') as f:
         return f.read().strip()
@@ -53,6 +55,20 @@ def delete_task():
     with open('tasks.txt', 'w') as f:
         f.writelines(tasks)
     print("Task deleted succesfully!")
+
+def check_deadlines():
+    try:
+        with open('tasks.txt', 'r') as f:
+            tasks = f.readlines()
+            today = datetime.now().date()
+            for task in tasks:
+                task_name, deadline, category, status = task.strip().split('|')
+                deadline_date = datetime.strp(deadline, "%Y-%m-%d").date()
+                days_left = (deadline_date - today).days
+                if days_left <= 2 and status == "Pending":
+                    print(f"Reminder: '{task_name}' is due in {days_left} day(s)!")
+    except FileNotFoundError:
+        print("No tasks to check deadlines.")
 
 if __name__ == "__main__":
     complete_task()
