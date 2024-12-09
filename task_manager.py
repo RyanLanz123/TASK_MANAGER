@@ -58,17 +58,56 @@ def delete_task():
 
 def check_deadlines():
     try:
+        today = datetime.today().date()  # Get today's date
         with open('tasks.txt', 'r') as f:
             tasks = f.readlines()
-            today = datetime.now().date()
+
+        if not tasks:
+            print("No tasks to check deadlines for.")
+        else:
             for task in tasks:
                 task_name, deadline, category, status = task.strip().split('|')
-                deadline_date = datetime.strp(deadline, "%Y-%m-%d").date()
+                deadline_date = datetime.strptime(deadline, "%Y-%m-%d").date()  # Parse the deadline string
                 days_left = (deadline_date - today).days
-                if days_left <= 2 and status == "Pending":
-                    print(f"Reminder: '{task_name}' is due in {days_left} day(s)!")
+
+                if days_left < 0:
+                    print(f"Task '{task_name}' is overdue! Deadline was {deadline_date}.")
+                elif days_left == 0:
+                    print(f"Task '{task_name}' is due today!")
+                else:
+                    print(f"Task '{task_name}' has {days_left} days left. Deadline: {deadline_date}.")
     except FileNotFoundError:
-        print("No tasks to check deadlines.")
+        print("No tasks file found. Please add tasks first.")
+    except ValueError as e:
+        print(f"Error processing tasks: {e}")
+
+
+
+def main():
+    while True:
+        print("\nTask Manager")
+        print("1. Add Tasks")
+        print("2. View Tasks")
+        print("3. Mark Task as Completed")
+        print("4. Delete Task")
+        print("5. Check Deadlines")
+        print("6. Quit")
+        choice = input("Choose an Option: ")
+        if choice == '1':
+            add_task()
+        elif choice == '2':
+            view_tasks()
+        elif choice == '3':
+            complete_task()
+        elif choice == '4':
+            delete_task()
+        elif choice == '5':
+            check_deadlines()
+        elif choice == '6':
+            break
+        else:
+            print("Invalid choice, try again.")
 
 if __name__ == "__main__":
-    complete_task()
+    login()
+    main()
