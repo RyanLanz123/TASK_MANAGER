@@ -34,5 +34,25 @@ def view_tasks():#View tasks in .txt file
     except FileNotFoundError:
             print("No tasks file found! Add a task first.")
 
-if __name__ == "__main__":
+def complete_task():#Allows ticking off of tasks for completion
     view_tasks()
+    task_no= int(input("Enter the task number to mark as compelted: "))
+    with open('tasks.txt', 'r') as f:
+        tasks = f.readlines()
+    tasks[task_no - 1] = tasks[task_no - 1].replace("Pending", "Compelted")
+    with open('tasks.txt', 'w') as f:
+        f.writelines(tasks)
+        print("Task marked as completed!")
+
+def delete_task():
+    view_tasks()
+    task_no = int(input("Enter the task number to delete: "))
+    with open('tasks.txt', 'r') as f:
+        tasks = f.readlines()
+    del tasks[task_no - 1]
+    with open('tasks.txt', 'w') as f:
+        f.writelines(tasks)
+    print("Task deleted succesfully!")
+
+if __name__ == "__main__":
+    complete_task()
